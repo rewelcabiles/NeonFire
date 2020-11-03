@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Entities/Base Classes/Base Projectile Ability/Base_Projectile.tscn" type="PackedScene" id=1]
+
+[node name="Energy_Rifle_Projectile" instance=ExtResource( 1 )]
+speed = 220

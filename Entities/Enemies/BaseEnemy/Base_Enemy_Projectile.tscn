@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Entities/Base Classes/Base Projectile Ability/Base_Projectile.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Entities/Enemies/BaseEnemy/Sprites/Base_Enemy_projectile.png" type="Texture" id=2]
+
+[node name="Base_Projectile" instance=ExtResource( 1 )]
+modulate = Color( 2, 1, 2, 1 )
+
+[node name="Sprite" parent="." index="1"]
+texture = ExtResource( 2 )

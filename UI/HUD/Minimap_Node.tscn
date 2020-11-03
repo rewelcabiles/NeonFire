@@ -1,0 +1,66 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://UI/HUD/Sprites/minimap_room.png" type="Texture" id=1]
+[ext_resource path="res://UI/HUD/Sprites/minimap_door_unlocked.png" type="Texture" id=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+var locked_door = load(\"res://UI/HUD/Sprites/minimap_door_locked.png\")
+var unlocked_door = load(\"res://UI/HUD/Sprites/minimap_door_unlocked.png\");
+
+var door_map = {
+	0: $North,
+	1: $East,
+	2: $South,
+	3: $West
+}
+
+func toggle_lock_door(side, state):
+	var door
+	if side == 0:
+		door = $North
+	elif side == 1:
+		door = $East
+	elif side == 2:
+		door = $South
+	elif side == 3:
+		door = $West
+	door.visible = true
+	if state == \"locked\":
+		door.texture = locked_door
+	elif state == \"unlocked\":
+		door.texture = unlocked_door
+"
+
+[node name="Room_Minimap" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="room" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+
+[node name="North" type="Sprite" parent="."]
+visible = false
+position = Vector2( 3.90799e-14, -11 )
+rotation = 1.5708
+scale = Vector2( 0.5, 1 )
+texture = ExtResource( 2 )
+
+[node name="South" type="Sprite" parent="."]
+visible = false
+position = Vector2( 1.10134e-13, 11 )
+rotation = 1.5708
+scale = Vector2( 0.5, 1 )
+texture = ExtResource( 2 )
+
+[node name="East" type="Sprite" parent="."]
+visible = false
+position = Vector2( 11, -3.69549e-06 )
+scale = Vector2( 0.5, 1 )
+texture = ExtResource( 2 )
+
+[node name="West" type="Sprite" parent="."]
+visible = false
+position = Vector2( -11, -3.69549e-06 )
+scale = Vector2( 0.5, 1 )
+texture = ExtResource( 2 )

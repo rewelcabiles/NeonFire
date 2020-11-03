@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Entities/Base Classes/Base Projectile Ability/Base_Projectile_Ability.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Entities/Weapons/Player Weapon Base/Scripts/Base_Player_Projectile_weapon.gd" type="Script" id=2]
+[ext_resource path="res://Entities/Weapons/Player Weapon Base/Scripts/Floor_Item.gd" type="Script" id=3]
+[ext_resource path="res://Entities/Weapons/Player Weapon Base/Sprites/Weapon_Pickup.png" type="Texture" id=4]
+[ext_resource path="res://UI/Fonts/Azonix-1VB0.otf" type="DynamicFontData" id=5]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 34.4371
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+font_data = ExtResource( 5 )
+
+[node name="Base_Player_Projectile_weapon" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+weapon_name = "New Weapobn"
+
+[node name="floor_item" type="Area2D" parent="." index="2" groups=[
+"interactable",
+]]
+visible = false
+position = Vector2( 0, -5 )
+collision_layer = 32
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="floor_item" index="0"]
+position = Vector2( 0, 5 )
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="floor_item" index="1"]
+modulate = Color( 2, 1.45, 1, 1 )
+texture = ExtResource( 4 )
+
+[node name="weapon_name" type="Label" parent="floor_item" index="2"]
+margin_right = 40.0
+margin_bottom = 18.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="reload_reminder" type="Label" parent="." index="3"]
+margin_left = 42.0292
+margin_top = -13.3074
+margin_right = 209.029
+margin_bottom = 20.6926
+custom_fonts/font = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="tree_entered" from="." to="." method="_on_Base_Player_Projectile_weapon_tree_entered"]
+[connection signal="body_entered" from="floor_item" to="floor_item" method="_on_floor_item_body_entered"]
+[connection signal="body_exited" from="floor_item" to="floor_item" method="_on_floor_item_body_exited"]

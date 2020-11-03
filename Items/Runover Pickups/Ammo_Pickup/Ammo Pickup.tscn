@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Items/Runover Pickups/Ammo_Pickup/Scripts/Ammo Pickup.gd" type="Script" id=1]
+[ext_resource path="res://Items/Runover Pickups/Ammo_Pickup/Sprites/Multi-Ammo_Pickup.png" type="Texture" id=2]
+[ext_resource path="res://Items/Runover Pickups/Base_Runover/Base Runover.tscn" type="PackedScene" id=3]
+
+[node name="Ammo Pickup" instance=ExtResource( 3 )]
+modulate = Color( 1, 1.4, 1, 1 )
+script = ExtResource( 1 )
+amount = 12
+
+[node name="Sprite" parent="." index="1"]
+texture = ExtResource( 2 )

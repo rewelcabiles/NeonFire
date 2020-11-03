@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Entities/Enemies/BaseEnemy/Base_Enemy_Projectile.tscn" type="PackedScene" id=1]
+
+[node name="360_Projectile" instance=ExtResource( 1 )]
+speed = 40
+damage = 1

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Entities/Weapons/Player Weapon Base/Base_Player_Projectile_weapon.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Entities/Weapons/Energy Rifle/Energy_Rifle_Projectile.tscn" type="PackedScene" id=2]
+
+[node name="Energy_Rifle" instance=ExtResource( 1 )]
+projectile_class = ExtResource( 2 )
+weapon_name = "Energy Rifle"
+max_total_ammo = 120
+total_ammo = 120
+fire_rate = 0.2
+reload_time = 1.2
+ammo_pickup_multipier = 1.2

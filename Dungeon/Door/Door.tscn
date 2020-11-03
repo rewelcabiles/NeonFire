@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Dungeon/Door/Sprites/Door_Open.png" type="Texture" id=1]
+[ext_resource path="res://Dungeon/Door/Scripts/Door.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 64, 24.6742 )
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Label
+
+
+
+func _ready():
+	pass # Replace with function body.
+	
+func appear(texts):
+	self.text = texts
+	$fade_out.wait_time = 3;
+	$fade_out.start();
+
+
+func _on_fade_out_timeout():
+	self.text = \"\"
+"
+
+[node name="Door" type="Area2D" groups=[
+"interactable",
+]]
+collision_layer = 32
+collision_mask = 29
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 64, 32 )
+shape = SubResource( 1 )
+
+[node name="Status" type="Label" parent="."]
+margin_right = 40.0
+margin_bottom = 14.0
+script = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="fade_out" type="Timer" parent="Status"]
+wait_time = 2.0
+one_shot = true
+[connection signal="timeout" from="Status/fade_out" to="Status" method="_on_fade_out_timeout"]

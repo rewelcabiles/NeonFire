@@ -1,0 +1,69 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Dungeon/Room/Assets/tileset_01.tres" type="TileSet" id=1]
+[ext_resource path="res://UI/Fonts/Azonix-1VB0.otf" type="DynamicFontData" id=2]
+[ext_resource path="res://Dungeon/Room/Scripts/Room.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="Theme" id=2]
+default_font = SubResource( 1 )
+
+[node name="Room" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="room_camera" type="Camera2D" parent="."]
+position = Vector2( -310.221, -741.786 )
+zoom = Vector2( 2, 2 )
+
+[node name="wall_tiles" type="TileMap" parent="."]
+modulate = Color( 1.2, 1, 1.2, 1 )
+tile_set = ExtResource( 1 )
+collision_layer = 2
+collision_mask = 61
+format = 1
+
+[node name="floor_tiles" type="TileMap" parent="."]
+z_index = -2
+tile_set = ExtResource( 1 )
+collision_layer = 0
+collision_mask = 0
+format = 1
+
+[node name="grid_tiles" type="TileMap" parent="."]
+modulate = Color( 1, 1, 2.1, 1 )
+z_index = -1
+tile_set = ExtResource( 1 )
+collision_layer = 0
+collision_mask = 0
+format = 1
+tile_data = PoolIntArray( 393237, -1610612732, 0 )
+
+[node name="Label" type="Label" parent="."]
+visible = false
+margin_left = 282.004
+margin_top = 213.438
+margin_right = 484.004
+margin_bottom = 279.438
+rect_scale = Vector2( 3, 3 )
+theme = SubResource( 2 )
+text = "TEST"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="debug_flags" type="Label" parent="."]
+visible = false
+margin_left = 320.0
+margin_top = 448.0
+margin_right = 360.0
+margin_bottom = 475.0
+rect_scale = Vector2( 2, 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="tree_entered" from="." to="." method="_on_Room_tree_entered"]

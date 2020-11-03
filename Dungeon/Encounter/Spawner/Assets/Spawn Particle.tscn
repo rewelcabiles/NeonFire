@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="ParticlesMaterial" id=1]
+emission_shape = 1
+emission_sphere_radius = 94.7
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+radial_accel = -100.0
+scale = 12.0
+scale_random = 0.85
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Particles2D
+
+
+var enemy_to_spawn
+
+
+func _on_particle_end_timeout():
+	get_parent().add_child(enemy_to_spawn)
+	queue_free()
+"
+
+[node name="Spawn Particle" type="Particles2D"]
+process_material = SubResource( 1 )
+script = SubResource( 2 )
+
+[node name="particle_end" type="Timer" parent="."]
+one_shot = true
+autostart = true
+[connection signal="timeout" from="particle_end" to="." method="_on_particle_end_timeout"]

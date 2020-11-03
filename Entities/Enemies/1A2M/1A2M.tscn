@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Entities/Enemies/BaseEnemy/Base Enemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Entities/Enemies/1A2M/Sprites/1A2M.png" type="Texture" id=2]
+[ext_resource path="res://Entities/Enemies/1A2M/360_Ability.tscn" type="PackedScene" id=3]
+
+[node name="1A2M" instance=ExtResource( 1 )]
+difficulty = 3
+
+[node name="AI" parent="." index="0"]
+can_move = false
+
+[node name="Abilities" parent="." index="1"]
+ability_1_class = ExtResource( 3 )
+
+[node name="Sprite" parent="Aim" index="0"]
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" parent="." index="3"]
+position = Vector2( -0.263893, -1 )

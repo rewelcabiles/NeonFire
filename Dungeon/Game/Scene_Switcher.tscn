@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Dungeon/Game/Scripts/Scene_Switcher.gd" type="Script" id=1]
+
+[node name="Scene_Manager" type="Node"]
+script = ExtResource( 1 )

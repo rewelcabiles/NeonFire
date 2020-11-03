@@ -1,0 +1,178 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Entities/Enemies/BaseEnemy/Base Enemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Entities/Enemies/1A3M-MB/Scripts/1A3M-MB_AI.gd" type="Script" id=2]
+[ext_resource path="res://Entities/Enemies/1A3M-MB/Sprites/1A3M-MB.png" type="Texture" id=3]
+[ext_resource path="res://Entities/Enemies/1A3M-MB/Scripts/ability_spiral.gd" type="Script" id=4]
+[ext_resource path="res://Entities/Base Classes/Base Projectile Ability/Base_Projectile_Ability.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Entities/Enemies/1A3M-MB/1A3M_Projectile_01.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Entities/Enemies/1A3M-MB/Scripts/ability_laser.gd" type="Script" id=7]
+
+[sub_resource type="Curve" id=1]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.996785, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=2]
+curve = SubResource( 1 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+emission_shape = 1
+emission_sphere_radius = 50.0
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 490.8
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 20.0
+scale_random = 0.06
+scale_curve = SubResource( 2 )
+color = Color( 1.5, 1.5, 1.5, 1 )
+
+[sub_resource type="ParticlesMaterial" id=4]
+emission_shape = 1
+emission_sphere_radius = 60.21
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 601.23
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 50.68
+scale_random = 0.06
+scale_curve = SubResource( 2 )
+color = Color( 1.5, 1.5, 1.5, 1 )
+
+[sub_resource type="Curve" id=8]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.990354, 0.486364 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=9]
+curve = SubResource( 8 )
+
+[sub_resource type="ParticlesMaterial" id=7]
+emission_shape = 2
+emission_box_extents = Vector3( 1, 1, 1 )
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 245.4
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+tangential_accel = 100.0
+scale = 6.0
+scale_random = 0.07
+scale_curve = SubResource( 9 )
+color = Color( 1.5, 1, 1, 1 )
+
+[sub_resource type="GDScript" id=5]
+script/source = "extends \"res://Entities/Enemies/BaseEnemy/Scripts/Abilities.gd\"
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+"
+
+[sub_resource type="CircleShape2D" id=6]
+radius = 66.8918
+
+[node name="1ABM" instance=ExtResource( 1 )]
+health = 100.0
+max_health = 100.0
+difficulty = 10
+
+[node name="AI" parent="." index="0"]
+script = ExtResource( 2 )
+can_move = false
+
+[node name="ability_spiral" parent="." index="1" instance=ExtResource( 5 )]
+z_index = 2
+script = ExtResource( 4 )
+projectile_class = ExtResource( 6 )
+max_total_ammo = -9223372036854775808
+total_ammo = -9223372036854775808
+max_clip = -9223372036854775808
+cur_clip = -9223372036854775808
+fire_rate = 0.001
+reload_time = 0.0
+projectile_count = 20
+
+[node name="projectile_delay" type="Timer" parent="ability_spiral" index="2"]
+wait_time = 0.1
+one_shot = true
+
+[node name="ability_laser" type="RayCast2D" parent="." index="2"]
+enabled = true
+cast_to = Vector2( 2000, 0 )
+collision_mask = 3
+script = ExtResource( 7 )
+
+[node name="Line2D" type="Line2D" parent="ability_laser" index="0"]
+modulate = Color( 1.5, 1, 1, 1 )
+points = PoolVector2Array( 0, 0, 2000, 0 )
+width = 0.0
+default_color = Color( 1, 1, 1, 1 )
+
+[node name="Tween" type="Tween" parent="ability_laser" index="1"]
+playback_speed = 2.0
+playback/speed = 2.0
+
+[node name="ability_delay" type="Timer" parent="ability_laser" index="2"]
+wait_time = 5.0
+one_shot = true
+
+[node name="fire_delay" type="Timer" parent="ability_laser" index="3"]
+wait_time = 4.0
+one_shot = true
+
+[node name="aim_delay" type="Timer" parent="ability_laser" index="4"]
+wait_time = 5.0
+one_shot = true
+
+[node name="fire_length" type="Timer" parent="ability_laser" index="5"]
+one_shot = true
+
+[node name="fire_particles" type="Particles2D" parent="ability_laser" index="6"]
+position = Vector2( 96, 0 )
+emitting = false
+amount = 16
+lifetime = 0.8
+process_material = SubResource( 3 )
+
+[node name="collision_particles" type="Particles2D" parent="ability_laser" index="7"]
+position = Vector2( 96, 0 )
+emitting = false
+amount = 16
+lifetime = 0.5
+process_material = SubResource( 4 )
+
+[node name="beam_particles" type="Particles2D" parent="ability_laser" index="8"]
+position = Vector2( 96, 0 )
+emitting = false
+amount = 16
+local_coords = false
+process_material = SubResource( 7 )
+
+[node name="Abilities" parent="." index="3"]
+script = SubResource( 5 )
+
+[node name="Sprite" parent="Aim" index="0"]
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" parent="." index="5"]
+position = Vector2( 0, -1 )
+shape = SubResource( 6 )
+
+[node name="damage_particles" parent="." index="7"]
+local_coords = false
+[connection signal="timeout" from="ability_spiral/projectile_delay" to="ability_spiral" method="_on_projectile_delay_timeout"]
+[connection signal="timeout" from="ability_laser/ability_delay" to="ability_laser" method="_on_ability_delay_timeout"]
+[connection signal="timeout" from="ability_laser/fire_delay" to="ability_laser" method="_on_fire_delay_timeout"]
+[connection signal="timeout" from="ability_laser/aim_delay" to="ability_laser" method="_on_aim_delay_timeout"]
+[connection signal="timeout" from="ability_laser/fire_length" to="ability_laser" method="_on_fire_length_timeout"]
