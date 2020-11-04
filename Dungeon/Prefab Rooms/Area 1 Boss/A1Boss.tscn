@@ -27,6 +27,7 @@ input_possible = true
 
 [node name="Boss" parent="." index="9" instance=ExtResource( 2 )]
 position = Vector2( 1231.73, 620.777 )
-health = 500.0
-max_health = 500.0
+health = 50.0
+max_health = 50.0
+[connection signal="shield_died" from="Boss" to="phase_mechanic" method="_on_Boss_shield_died"]
 [connection signal="took_damage" from="Boss" to="phase_mechanic" method="_on_Boss_took_damage"]

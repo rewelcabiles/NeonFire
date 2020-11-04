@@ -4,7 +4,7 @@ signal all_enemies_dead
 
 export (bool) var wave_spawning = false
 export (int) var wave_amount = 3
-export (int) var wave_time_between = 12
+export (int) var wave_time_between = 24
 export (int) var amount = 4
 export (int) var difficulty = 4
 export (float) var initial_delay = 0.1
