@@ -10,7 +10,7 @@ export var cur_hp = 20
 # Shields
 
 
-func take_damage(damage):
+func take_damage(damage, p_owner):
 	if !invulnerable:
 		get_parent().get_node("damage_particles").emitting = true
 		cur_hp = cur_hp - damage;

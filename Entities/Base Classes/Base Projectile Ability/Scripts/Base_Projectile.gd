@@ -4,6 +4,7 @@ export var speed = 600
 export var damage = 2
 export (bool) var player_projectile = false
 var watching = true
+var projectile_owner = null
 
 func _physics_process(delta):
 	position += transform.x * (speed*10) * delta
@@ -12,7 +13,7 @@ func _on_Base_Projectile_body_shape_entered(body_id, body, body_shape, area_shap
 	if !watching:
 		return null
 	if body.name != "wall_tiles":
-		body.take_damage(damage)
+		body.take_damage(damage, projectile_owner)
 
 	speed = 20
 	watching = false

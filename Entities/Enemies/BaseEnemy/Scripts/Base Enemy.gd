@@ -3,6 +3,7 @@ extends KinematicBody2D
 signal died
 signal took_damage
 
+
 export (float) var health = 10.0
 export (float) var max_health = 10.0
 export (int) var speed = 100
@@ -34,7 +35,13 @@ func _physics_process(delta):
 	move_and_slide(velocity * speed)
 	#print(velocity)
 
-func take_damage(damage):
+func heal(amount, bypass_max = false):
+	health += amount
+	if !bypass_max:
+		if health + amount > max_health:
+			health = max_health
+
+func take_damage(damage, from = null):
 	health -= damage
 	$damage_particles.emitting = true
 	if health <= 0 and ready == true:
@@ -43,7 +50,9 @@ func take_damage(damage):
 		$death_particles.emitting = true
 		$AnimationPlayer.play("die")
 	emit_signal("took_damage", self)
-		
+	
 func get_health_as_percentage():
 	return (health / max_health) * 100.0
+
+
 

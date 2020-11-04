@@ -1,9 +1,11 @@
 extends KinematicBody2D
 
 export (int) var base_speed = 440
+export (bool) var input_possible = false
+export (int) var energy_warp = 50
 var speed = base_speed
 var acceleration = 0.2
-export (bool) var input_possible = false
+
 
 
 var velocity = Vector2()
@@ -15,8 +17,8 @@ onready var HUD = $HUD
 func _ready():
 	HUD.player = self
 	
-func take_damage(damage):
-	$health.take_damage(damage)
+func take_damage(damage, p_owner):
+	$health.take_damage(damage, p_owner)
 
 func add_to_inventory(item):
 	inventory.append(item)

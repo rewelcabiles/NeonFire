@@ -45,6 +45,7 @@ func fire():
 
 func spawn_projectiles():
 	var projectile = projectile_class.instance();
+	projectile.projectile_owner = get_parent()
 	if not get_parent().name == "Player":
 		projectile.is_player_bullet(false)
 		
