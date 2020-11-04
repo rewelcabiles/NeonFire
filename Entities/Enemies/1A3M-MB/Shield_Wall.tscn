@@ -1,0 +1,55 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Entities/Enemies/1A3M-MB/Scripts/Shield_Wall.gd" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 67.247, 5.39014 )
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=3]
+curve = SubResource( 2 )
+
+[sub_resource type="ParticlesMaterial" id=4]
+emission_shape = 2
+emission_box_extents = Vector3( 50, 1, 1 )
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 100.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+tangential_accel = 11.66
+scale = 4.0
+scale_curve = SubResource( 3 )
+color = Color( 1.4, 1, 1, 1 )
+
+[node name="Shield_1" type="KinematicBody2D"]
+self_modulate = Color( 1, 1, 1.5, 1 )
+z_index = -1
+collision_layer = 4
+collision_mask = 13
+script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 1.90735e-05, -7.62939e-06 )
+shape = SubResource( 1 )
+disabled = true
+
+[node name="Line2D" type="Line2D" parent="."]
+position = Vector2( -26, 0 )
+points = PoolVector2Array( 93, 0, -41, 0 )
+width = 0.0
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="hit_particles" type="Particles2D" parent="."]
+modulate = Color( 1.5, 1, 1, 1 )
+position = Vector2( 1, 0 )
+emitting = false
+amount = 19
+lifetime = 0.5
+one_shot = true
+process_material = SubResource( 4 )
+[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]

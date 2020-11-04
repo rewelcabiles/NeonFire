@@ -6,11 +6,20 @@ onready var step = 2 * PI / projectile_count
 var current_projectile_count = 0
 onready var delay = $projectile_delay
 var can_spawn = true		
+
+
+func fire():
+	if can_fire and cur_clip != 0 and !reloading:
+		var projectile_arms = get_parent().get_node("AI").difficulty
+		for i in range(projectile_arms):
+			spawn_projectile(fmod(current_projectile_count + (i * 5), projectile_count))
 		
-func spawn_projectiles():
-	
-	var i = current_projectile_count
-	var aim = get_parent().get_node("Aim")
+		can_fire = false
+		self.cur_clip -= 1
+		$fire_timer.set_wait_time(fire_rate)
+		$fire_timer.start();
+
+func spawn_projectile(i):
 	var spawn_pos = Vector2(0,0) + radius.rotated(step * i)
 	
 	var projectile = projectile_class.instance();
@@ -19,7 +28,7 @@ func spawn_projectiles():
 	if not get_parent().name == "Player":
 		projectile.is_player_bullet(false)
 		
-	var angle = radius.rotated(step * i).angle()# + aim.transform.get_rotation()
+	var angle = radius.rotated(step * i).angle()
 	var new_transform = Transform2D(angle, spawn_pos + get_parent().position)
 	projectile.transform = new_transform;
 	get_parent().get_parent().add_child(projectile)

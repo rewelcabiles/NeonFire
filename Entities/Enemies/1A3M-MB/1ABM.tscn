@@ -1,12 +1,16 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Entities/Enemies/BaseEnemy/Base Enemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Entities/Enemies/1A3M-MB/Scripts/1A3M-MB_AI.gd" type="Script" id=2]
 [ext_resource path="res://Entities/Enemies/1A3M-MB/Sprites/1A3M-MB.png" type="Texture" id=3]
 [ext_resource path="res://Entities/Enemies/1A3M-MB/Scripts/ability_spiral.gd" type="Script" id=4]
 [ext_resource path="res://Entities/Base Classes/Base Projectile Ability/Base_Projectile_Ability.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Entities/Enemies/1A3M-MB/1A3M_Projectile_01.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Entities/Enemies/1A3M-MB/1ABM_Projectile_01.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Entities/Enemies/1A3M-MB/Scripts/ability_laser.gd" type="Script" id=7]
+[ext_resource path="res://Entities/Enemies/1A3M-MB/1ABM_Shield_Ability.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Entities/Enemies/1A3M-MB/Sprites/1A3M_Health.png" type="Texture" id=9]
+[ext_resource path="res://Entities/Enemies/1A3M-MB/Scripts/1ABM.gd" type="Script" id=10]
+[ext_resource path="res://Entities/Enemies/1A3M-MB/Scripts/ability_heal.gd" type="Script" id=11]
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.996785, 0 ), 0.0, 0.0, 0, 0 ]
@@ -40,11 +44,11 @@ scale_random = 0.06
 scale_curve = SubResource( 2 )
 color = Color( 1.5, 1.5, 1.5, 1 )
 
-[sub_resource type="Curve" id=8]
+[sub_resource type="Curve" id=5]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.990354, 0.486364 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=9]
-curve = SubResource( 8 )
+[sub_resource type="CurveTexture" id=6]
+curve = SubResource( 5 )
 
 [sub_resource type="ParticlesMaterial" id=7]
 emission_shape = 2
@@ -57,10 +61,10 @@ orbit_velocity_random = 0.0
 tangential_accel = 100.0
 scale = 6.0
 scale_random = 0.07
-scale_curve = SubResource( 9 )
+scale_curve = SubResource( 6 )
 color = Color( 1.5, 1, 1, 1 )
 
-[sub_resource type="GDScript" id=5]
+[sub_resource type="GDScript" id=8]
 script/source = "extends \"res://Entities/Enemies/BaseEnemy/Scripts/Abilities.gd\"
 
 
@@ -79,13 +83,14 @@ func _ready():
 #	pass
 "
 
-[sub_resource type="CircleShape2D" id=6]
+[sub_resource type="CircleShape2D" id=9]
 radius = 66.8918
 
 [node name="1ABM" instance=ExtResource( 1 )]
-health = 100.0
-max_health = 100.0
-difficulty = 10
+modulate = Color( 1, 1, 1, 1 )
+script = ExtResource( 10 )
+health = 450.0
+max_health = 450.0
 
 [node name="AI" parent="." index="0"]
 script = ExtResource( 2 )
@@ -99,7 +104,7 @@ max_total_ammo = -9223372036854775808
 total_ammo = -9223372036854775808
 max_clip = -9223372036854775808
 cur_clip = -9223372036854775808
-fire_rate = 0.001
+fire_rate = 0.04
 reload_time = 0.0
 projectile_count = 20
 
@@ -159,20 +164,39 @@ amount = 16
 local_coords = false
 process_material = SubResource( 7 )
 
-[node name="Abilities" parent="." index="3"]
-script = SubResource( 5 )
+[node name="ability_shield" parent="." index="3" instance=ExtResource( 8 )]
+
+[node name="ability_heal" type="Node2D" parent="." index="4"]
+position = Vector2( 0, -1 )
+script = ExtResource( 11 )
+
+[node name="ability_heal_timer" type="Timer" parent="ability_heal" index="0"]
+
+[node name="Abilities" parent="." index="5"]
+script = SubResource( 8 )
 
 [node name="Sprite" parent="Aim" index="0"]
+self_modulate = Color( 1.4, 1, 1.4, 1 )
 texture = ExtResource( 3 )
 
-[node name="CollisionShape2D" parent="." index="5"]
-position = Vector2( 0, -1 )
-shape = SubResource( 6 )
+[node name="health" type="Sprite" parent="Aim" index="1"]
+position = Vector2( -34, -1 )
+rotation = 1.5708
+z_index = 1
+texture = ExtResource( 9 )
 
-[node name="damage_particles" parent="." index="7"]
+[node name="CollisionShape2D" parent="." index="7"]
+position = Vector2( 0, -1 )
+shape = SubResource( 9 )
+
+[node name="damage_particles" parent="." index="9"]
 local_coords = false
+
+[node name="Tween" type="Tween" parent="." index="11"]
 [connection signal="timeout" from="ability_spiral/projectile_delay" to="ability_spiral" method="_on_projectile_delay_timeout"]
 [connection signal="timeout" from="ability_laser/ability_delay" to="ability_laser" method="_on_ability_delay_timeout"]
 [connection signal="timeout" from="ability_laser/fire_delay" to="ability_laser" method="_on_fire_delay_timeout"]
 [connection signal="timeout" from="ability_laser/aim_delay" to="ability_laser" method="_on_aim_delay_timeout"]
 [connection signal="timeout" from="ability_laser/fire_length" to="ability_laser" method="_on_fire_length_timeout"]
+[connection signal="shield_died" from="ability_shield" to="." method="_on_ability_shield_shield_died"]
+[connection signal="timeout" from="ability_heal/ability_heal_timer" to="ability_heal" method="_on_ability_heal_timer_timeout"]
