@@ -288,7 +288,7 @@ margin_right = 38.0
 margin_bottom = 27.0
 custom_fonts/font = ExtResource( 6 )
 
-[node name="Top Right" type="MarginContainer" parent="Control"]
+[node name="Top_Right" type="MarginContainer" parent="Control"]
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -181.0
@@ -297,12 +297,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Inventory" type="VBoxContainer" parent="Control/Top Right"]
+[node name="Inventory" type="VBoxContainer" parent="Control/Top_Right"]
 margin_right = 181.0
 margin_bottom = 267.0
 script = ExtResource( 3 )
 
-[node name="Button" type="Button" parent="Control/Top Right/Inventory"]
+[node name="Button" type="Button" parent="Control/Top_Right/Inventory"]
 margin_right = 181.0
 margin_bottom = 33.0
 focus_mode = 1
@@ -312,7 +312,7 @@ flat = true
 align = 0
 expand_icon = true
 
-[node name="Item_List" type="RichTextLabel" parent="Control/Top Right/Inventory"]
+[node name="Item_List" type="RichTextLabel" parent="Control/Top_Right/Inventory"]
 margin_top = 37.0
 margin_right = 181.0
 margin_bottom = 267.0
@@ -377,4 +377,4 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Fade_In = SubResource( 2 )
-[connection signal="pressed" from="Control/Top Right/Inventory/Button" to="Control/Top Right/Inventory" method="_on_Button_pressed"]
+[connection signal="pressed" from="Control/Top_Right/Inventory/Button" to="Control/Top_Right/Inventory" method="_on_Button_pressed"]
