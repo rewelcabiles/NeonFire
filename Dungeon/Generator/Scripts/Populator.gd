@@ -26,6 +26,7 @@ func populate_level(rl):
 	rooms_list = rl
 	# Start Room
 	replace_room_with_prefab(0, load("res://Dungeon/Prefab Rooms/Area 1/Start Room.tscn").instance())
+	replace_room_with_prefab(-1, load("res://Dungeon/Prefab Rooms/Area 1 Boss/A1Boss.tscn").instance())
 	# Initialize Random Room Size if Not Prefab
 	for room in rooms_list:
 		if !room.is_prefab:

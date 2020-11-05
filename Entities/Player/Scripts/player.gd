@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 export (int) var base_speed = 440
 export (bool) var input_possible = false
-export (int) var energy_warp = 50
+export (int) var energy_warp = 0
 var speed = base_speed
 var acceleration = 0.2
 

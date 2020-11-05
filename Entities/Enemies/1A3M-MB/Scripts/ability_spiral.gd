@@ -1,9 +1,9 @@
 extends "res://Entities/Base Classes/Base Projectile Ability/Scripts/Base_Projectile_Ability.gd"
 
-export (int) var projectile_count;
+export (float) var projectile_count;
 var radius = Vector2(60, 0)
 onready var step = 2 * PI / projectile_count
-var current_projectile_count = 0
+var current_projectile_count = 0.0
 onready var delay = $projectile_delay
 var can_spawn = true		
 
@@ -12,7 +12,7 @@ func fire():
 	if can_fire and cur_clip != 0 and !reloading:
 		var projectile_arms = get_parent().get_node("AI").difficulty
 		for i in range(projectile_arms):
-			spawn_projectile(fmod(current_projectile_count + (i * 5), projectile_count))
+			spawn_projectile(fmod(current_projectile_count + (i * 10.0), projectile_count))
 		
 		can_fire = false
 		self.cur_clip -= 1

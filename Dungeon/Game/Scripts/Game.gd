@@ -12,7 +12,7 @@ var door_mirror = {0:2, 1:3, 2:0, 3:1}
 
 func _ready():
 	MusicManager.play_music("EndlessBlue")
-	floor_1 = Generator.get_node("Eller").generate_floor(5, 0)
+	floor_1 = Generator.get_node("Eller").generate_floor(4, 0)
 	var path = Generator.get_node("DFS").dfs(floor_1)
 	
 	for room_index in range(path.size()):

@@ -30,11 +30,9 @@ func randomize_room():
 	rng.randomize()
 	if rng.randi_range(0, 100) < 30:
 		cur_size.x = rng.randi_range(min_size.x, max_size.x)
-		#min_size.y += int(cur_size.x / 2)
 		cur_size.y = rng.randi_range(min_size.y, max_size.y)
 	else:
 		cur_size.y = rng.randi_range(min_size.y, max_size.y)
-		#min_size.x += int(cur_size.y / 2)
 		cur_size.x = rng.randi_range(min_size.x, max_size.x)
 
 	for x in range(cur_size.x):
@@ -43,6 +41,7 @@ func randomize_room():
 				$wall_tiles.set_cellv(Vector2(x, y), 1)
 			else:
 				$grid_tiles.set_cellv(Vector2(x, y), 5)
+				$spawnable_tiles.set_cellv(Vector2(x, y), 5)
 			$floor_tiles.set_cellv(Vector2(x, y), 3)
 			
 	$floor_tiles.update_bitmask_region()

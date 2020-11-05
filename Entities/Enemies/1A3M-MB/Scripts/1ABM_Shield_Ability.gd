@@ -5,10 +5,11 @@ signal toggle_shields
 var enabled = false
 
 func _ready():
-	toggle_shields(false)
+	visible = false
+	toggle_shields(true)
 
 func _physics_process(delta):
-	if self.rotation_degrees == 0:
+	if self.rotation_degrees == 0 or self.rotation_degrees == 360:
 		self.rotating()
 	
 func rotating():
