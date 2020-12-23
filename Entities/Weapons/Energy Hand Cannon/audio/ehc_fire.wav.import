@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/ehc_fire.wav-236dd312512cc6a109f29eba386ebec7.sample"
+
+[deps]
+
+source_file="res://Entities/Weapons/Energy Hand Cannon/audio/ehc_fire.wav"
+dest_files=[ "res://.import/ehc_fire.wav-236dd312512cc6a109f29eba386ebec7.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Bright_Future_Ahead.ogg-cb42028014e150a2a0c82223cfbae8fd.oggstr"
+
+[deps]
+
+source_file="res://Audio/Music/Bright_Future_Ahead.ogg"
+dest_files=[ "res://.import/Bright_Future_Ahead.ogg-cb42028014e150a2a0c82223cfbae8fd.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

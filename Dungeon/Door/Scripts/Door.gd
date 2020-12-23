@@ -20,10 +20,10 @@ func rotate_90():
 	$Status.set_rotation(-1.598);
 	#position.x += 64
 
-func initialize(partner, connects, location, is_p):
+func initialize(partner, connects, loc, is_p):
 	self.door_partner = partner
 	self.connects_to = connects
-	self.location = location
+	self.location = loc
 	self.is_partner = is_p
 
 func lock_door(requirement):
@@ -43,7 +43,6 @@ func unlock_door(requirement):
 
 func interact(player):
 	if requires.size() == 0:
-		print("Door interacted, sending signal to room")
 		emit_signal("door_entered", self)
 	else:
 		print("Door interacted yet is locked")
@@ -55,6 +54,7 @@ func interact(player):
 				found = true
 				$Status.appear("Unlocked!")
 		if !found:
+			$AudioStreamPlayer2D.play_locked()
 			$Status.appear("Locked, Requires " + requires[-1])
 	update_texture()
 	
@@ -65,3 +65,4 @@ func update_texture():
 	else:
 		state = "unlocked"
 		$Sprite.texture = open_texture
+

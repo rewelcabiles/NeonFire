@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Synthy.ogg-a12238cb7eceb838997d05c3dd2a34eb.oggstr"
+
+[deps]
+
+source_file="res://Audio/Music/Synthy.ogg"
+dest_files=[ "res://.import/Synthy.ogg-a12238cb7eceb838997d05c3dd2a34eb.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

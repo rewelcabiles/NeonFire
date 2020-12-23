@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Aerial.ogg-47e0c48797c5f71a082773b66dd94a54.oggstr"
+
+[deps]
+
+source_file="res://Audio/Music/Aerial.ogg"
+dest_files=[ "res://.import/Aerial.ogg-47e0c48797c5f71a082773b66dd94a54.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
