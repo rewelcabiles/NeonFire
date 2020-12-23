@@ -25,6 +25,7 @@ func change_weapon(weapon):
 		primary_weapon = weapon
 		hud.primary_info.update_weapon(primary_weapon)
 		primary_weapon.connect("property_change", hud.primary_info, "update_info")
+		primary_weapon.position = Vector2(0, 0)
 		player.add_child(primary_weapon)
 			
 	elif (current_weapon == "secondary"  or secondary_weapon == null) and primary_weapon != null:
@@ -33,6 +34,7 @@ func change_weapon(weapon):
 			secondary_weapon.disconnect("property_change", hud.secondary_info, "update_info")
 			
 		secondary_weapon = weapon
+		secondary_weapon.position = Vector2(0, 0)
 		hud.secondary_info.update_weapon(secondary_weapon)
 		secondary_weapon.connect("property_change", hud.secondary_info, "update_info")
 		player.add_child(secondary_weapon)

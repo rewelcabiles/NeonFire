@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+signal died
+
 export (int) var base_speed = 440
 export (bool) var input_possible = false
 export (int) var energy_warp = 0
@@ -7,7 +9,7 @@ var speed = base_speed
 var acceleration = 0.2
 
 
-
+var dead = false
 var velocity = Vector2()
 var interactable = [];
 var inventory = [];
@@ -62,12 +64,15 @@ func get_input():
 	else:
 		velocity = velocity.linear_interpolate(Vector2.ZERO, acceleration)
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if input_possible:
 		get_input()
+		$sight_laser.set_point_position(1, get_local_mouse_position())
+	else:
+		$sight_laser.set_point_position(1, Vector2(0, 0))
 	$Aim.look_at(get_global_mouse_position())
 	velocity = move_and_slide(velocity)
-	
+
 
 func _on_interact_zone_area_entered(area):
 	if area.is_in_group("interactable"):
