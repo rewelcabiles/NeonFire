@@ -7,13 +7,13 @@
 [node name="Energy_Rifle" instance=ExtResource( 1 )]
 projectile_class = ExtResource( 2 )
 weapon_name = "Energy Rifle"
-max_total_ammo = 360
-total_ammo = 240
+max_total_ammo = 380
+total_ammo = 280
 max_clip = 40
 cur_clip = 40
 fire_rate = 0.15
 reload_time = 0.6
-ammo_pickup_multiplier = 1.7
+ammo_pickup_multiplier = 3.0
 
 [node name="sfx" parent="." index="4"]
 stream = ExtResource( 3 )

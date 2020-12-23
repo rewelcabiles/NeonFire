@@ -11,4 +11,5 @@ total_ammo = 1000
 max_clip = 6
 cur_clip = 6
 fire_rate = 0.6
-projectile_count = 8
+reload_time = 1.8
+projectile_count = 11
