@@ -10,8 +10,8 @@ var room_dict = {}
 var room_spacing = 30
 
 func _ready():
-	gv = Generator.get_node("Global_Vars");
-	var room_amount = gv.get_room_list_size()
+	gv = Game.Generator.get_node("Global_Vars");
+	#var room_amount = gv.get_room_list_size()
 	for room in gv.room_list:
 		var room_minimap = room_node.instance()
 		room_dict[room] = room_minimap

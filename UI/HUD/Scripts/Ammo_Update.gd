@@ -23,7 +23,7 @@ func update_info(weapon):
 	$Information/Current_Ammo/Label.text = str(weapon.cur_clip) + "/" + str(weapon.max_clip)
 
 
-func _process(delta):
+func _process(_delta):
 	if player != null:
 		var weapons = player.get_node("weapons")
 		if weapons.primary_weapon != null:

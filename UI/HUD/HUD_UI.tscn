@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://UI/HUD/Scripts/HUD_UI.gd" type="Script" id=1]
 [ext_resource path="res://UI/HUD/Sprites/Progress_Progress.png" type="Texture" id=2]
@@ -15,7 +15,23 @@
 [ext_resource path="res://UI/HUD/Sprites/Single_Ammo.png" type="Texture" id=14]
 [ext_resource path="res://UI/HUD/Sprites/Multi_Ammo.png" type="Texture" id=15]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="GDScript" id=4]
+script/source = "extends VBoxContainer
+
+
+func _ready():
+	Game.Generator.get_node(\"Player_Abilities\").connect(\"changed\", self, \"update_list\")
+
+func update_list():
+	$RichTextLabel.text = \"\"
+	
+	var abilities = Game.Generator.get_node(\"Player_Abilities\").unlocked_abilities
+	for ability in abilities:
+		if abilities[ability] == true:
+			$RichTextLabel.text += ability + \"\\n\" 
+"
+
+[sub_resource type="DynamicFont" id=5]
 size = 26
 outline_size = 3
 outline_color = Color( 0, 0, 0, 1 )
@@ -23,7 +39,7 @@ extra_spacing_top = 3
 extra_spacing_char = 10
 font_data = ExtResource( 13 )
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=3]
 length = 2.0
 tracks/0/type = "bezier"
 tracks/0/path = NodePath("Control:modulate:r")
@@ -297,12 +313,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Inventory" type="VBoxContainer" parent="Control/Top_Right"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Top_Right"]
+margin_right = 181.0
+margin_bottom = 752.0
+
+[node name="Inventory" type="VBoxContainer" parent="Control/Top_Right/VBoxContainer"]
 margin_right = 181.0
 margin_bottom = 267.0
 script = ExtResource( 3 )
 
-[node name="Button" type="Button" parent="Control/Top_Right/Inventory"]
+[node name="Button" type="Button" parent="Control/Top_Right/VBoxContainer/Inventory"]
 margin_right = 181.0
 margin_bottom = 33.0
 focus_mode = 1
@@ -312,11 +332,30 @@ flat = true
 align = 0
 expand_icon = true
 
-[node name="Item_List" type="RichTextLabel" parent="Control/Top_Right/Inventory"]
+[node name="Item_List" type="RichTextLabel" parent="Control/Top_Right/VBoxContainer/Inventory"]
 margin_top = 37.0
 margin_right = 181.0
 margin_bottom = 267.0
 rect_min_size = Vector2( 0, 230 )
+custom_fonts/normal_font = ExtResource( 8 )
+meta_underlined = false
+
+[node name="Upgrades" type="VBoxContainer" parent="Control/Top_Right/VBoxContainer"]
+margin_top = 271.0
+margin_right = 181.0
+margin_bottom = 752.0
+script = SubResource( 4 )
+
+[node name="Title" type="Label" parent="Control/Top_Right/VBoxContainer/Upgrades"]
+margin_right = 181.0
+margin_bottom = 27.0
+text = "Upgrades"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/Top_Right/VBoxContainer/Upgrades"]
+margin_top = 31.0
+margin_right = 181.0
+margin_bottom = 481.0
+rect_min_size = Vector2( 0, 450 )
 custom_fonts/normal_font = ExtResource( 8 )
 meta_underlined = false
 
@@ -368,7 +407,7 @@ margin_left = 248.0
 margin_right = 351.0
 margin_bottom = 30.0
 size_flags_horizontal = 4
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 5 )
 text = "100%"
 align = 1
 __meta__ = {
@@ -376,5 +415,5 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Fade_In = SubResource( 2 )
-[connection signal="pressed" from="Control/Top_Right/Inventory/Button" to="Control/Top_Right/Inventory" method="_on_Button_pressed"]
+anims/Fade_In = SubResource( 3 )
+[connection signal="pressed" from="Control/Top_Right/VBoxContainer/Inventory/Button" to="Control/Top_Right/VBoxContainer/Inventory" method="_on_Button_pressed"]
