@@ -1,7 +1,7 @@
 extends "res://Items/Runover Pickups/Base_Runover/Scripts/Base Runover.gd"
 
 
-export (int) var amount = 4
+export (int) var amount = 3
 
 func _on_run_over(player):
 	var health = player.get_node("health")
