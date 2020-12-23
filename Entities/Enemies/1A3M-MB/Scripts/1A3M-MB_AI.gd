@@ -25,8 +25,7 @@ func set_phase(phase):
 	if phase == 2:
 		ability_shield = ability_shield_class.instance()
 		ability_shield.connect("shield_died", get_parent(), "_on_ability_shield_shield_died")
-		get_parent().add_child(ability_shield)
-			
+		get_parent().call_deferred("add_child", ability_shield)
 		ability_heal.start()
 		current_phase = 2
 

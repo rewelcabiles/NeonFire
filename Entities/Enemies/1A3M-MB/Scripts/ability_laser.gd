@@ -1,8 +1,24 @@
 extends RayCast2D
 
+export var damage = 2
+export var tick_per_damage = 0.2
+export var ability_delay = 5
+export var aim_delay = 5
+export var fire_delay = 1
+
 var is_casting := false setget set_is_casting
 var state = 0 #0 = Off, 1 = Aiming, 2 = Firing, 3 between aiming and firing
 var on = false
+var can_damage = true
+var body
+
+func increase_difficulty():
+	if ability_delay != 1:
+		ability_delay -= 1
+	if aim_delay != 1:
+		aim_delay -= 1
+	if fire_delay != 0.1:
+		fire_delay -= 0.3
 
 func _physics_process(delta):
 	var cast_point := cast_to
@@ -11,6 +27,12 @@ func _physics_process(delta):
 	
 	if is_colliding():
 		cast_point = to_local(get_collision_point())
+		body = get_collider()
+		if state == 2:
+			if body.name == "Player" and can_damage:
+				body.take_damage(damage, get_parent())
+				can_damage = false
+				$damage_tick.start(tick_per_damage)
 	
 	if state == 1:
 		self.transform = get_parent().get_node("Aim").transform
@@ -54,16 +76,16 @@ func disappear():
 
 func start():
 	on = true
-	$ability_delay.start(5)
+	$ability_delay.start(ability_delay)
 
 func _on_ability_delay_timeout():
 	state = 1
 	self.is_casting = true
-	$aim_delay.start(5)
+	$aim_delay.start(aim_delay)
 
 func _on_aim_delay_timeout():
 	state = 3
-	$fire_delay.start(1)
+	$fire_delay.start(fire_delay)
 
 func _on_fire_delay_timeout():
 	state = 2
@@ -76,3 +98,7 @@ func _on_fire_length_timeout():
 	disappear()
 	$fire_particles.emitting = false
 	on = false
+
+
+func _on_damage_tick_timeout():
+	can_damage = true

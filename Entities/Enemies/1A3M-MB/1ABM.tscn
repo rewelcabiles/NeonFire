@@ -30,7 +30,27 @@ scale_random = 0.06
 scale_curve = SubResource( 2 )
 color = Color( 1.5, 1.5, 1.5, 1 )
 
-[sub_resource type="ParticlesMaterial" id=4]
+[sub_resource type="Curve" id=4]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.990354, 0.486364 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=5]
+curve = SubResource( 4 )
+
+[sub_resource type="ParticlesMaterial" id=6]
+emission_shape = 2
+emission_box_extents = Vector3( 1, 1, 1 )
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 245.4
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+tangential_accel = 100.0
+scale = 6.0
+scale_random = 0.07
+scale_curve = SubResource( 5 )
+color = Color( 1.5, 1, 1, 1 )
+
+[sub_resource type="ParticlesMaterial" id=7]
 emission_shape = 1
 emission_sphere_radius = 60.21
 flag_disable_z = true
@@ -42,26 +62,6 @@ scale = 50.68
 scale_random = 0.06
 scale_curve = SubResource( 2 )
 color = Color( 1.5, 1.5, 1.5, 1 )
-
-[sub_resource type="Curve" id=5]
-_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.990354, 0.486364 ), 0.0, 0.0, 0, 0 ]
-
-[sub_resource type="CurveTexture" id=6]
-curve = SubResource( 5 )
-
-[sub_resource type="ParticlesMaterial" id=7]
-emission_shape = 2
-emission_box_extents = Vector3( 1, 1, 1 )
-flag_disable_z = true
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 245.4
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-tangential_accel = 100.0
-scale = 6.0
-scale_random = 0.07
-scale_curve = SubResource( 6 )
-color = Color( 1.5, 1, 1, 1 )
 
 [sub_resource type="GDScript" id=8]
 script/source = "extends \"res://Entities/Enemies/BaseEnemy/Scripts/Abilities.gd\"
@@ -88,8 +88,8 @@ radius = 66.8918
 [node name="1ABM" instance=ExtResource( 1 )]
 modulate = Color( 1, 1, 1, 1 )
 script = ExtResource( 10 )
-health = 450.0
-max_health = 450.0
+health = 300.0
+max_health = 300.0
 
 [node name="AI" parent="." index="0"]
 script = ExtResource( 2 )
@@ -99,6 +99,7 @@ can_move = false
 z_index = 2
 script = ExtResource( 4 )
 projectile_class = ExtResource( 6 )
+sfx_file = null
 max_total_ammo = -9223372036854775808
 total_ammo = -9223372036854775808
 max_clip = -9223372036854775808
@@ -116,6 +117,8 @@ enabled = true
 cast_to = Vector2( 2000, 0 )
 collision_mask = 3
 script = ExtResource( 7 )
+ability_delay = 4
+aim_delay = 4
 
 [node name="Line2D" type="Line2D" parent="ability_laser" index="0"]
 modulate = Color( 1.5, 1, 1, 1 )
@@ -142,25 +145,28 @@ one_shot = true
 [node name="fire_length" type="Timer" parent="ability_laser" index="5"]
 one_shot = true
 
-[node name="fire_particles" type="Particles2D" parent="ability_laser" index="6"]
+[node name="damage_tick" type="Timer" parent="ability_laser" index="6"]
+wait_time = 0.2
+
+[node name="fire_particles" type="Particles2D" parent="ability_laser" index="7"]
 position = Vector2( 96, 0 )
 emitting = false
 amount = 16
 lifetime = 0.8
 process_material = SubResource( 3 )
 
-[node name="collision_particles" type="Particles2D" parent="ability_laser" index="7"]
-position = Vector2( 96, 0 )
-emitting = false
-amount = 16
-lifetime = 0.5
-process_material = SubResource( 4 )
-
 [node name="beam_particles" type="Particles2D" parent="ability_laser" index="8"]
 position = Vector2( 96, 0 )
 emitting = false
 amount = 16
 local_coords = false
+process_material = SubResource( 6 )
+
+[node name="collision_particles" type="Particles2D" parent="ability_laser" index="9"]
+position = Vector2( 96, 0 )
+emitting = false
+amount = 16
+lifetime = 0.5
 process_material = SubResource( 7 )
 
 [node name="ability_heal" type="Node2D" parent="." index="3"]
@@ -195,4 +201,5 @@ local_coords = false
 [connection signal="timeout" from="ability_laser/fire_delay" to="ability_laser" method="_on_fire_delay_timeout"]
 [connection signal="timeout" from="ability_laser/aim_delay" to="ability_laser" method="_on_aim_delay_timeout"]
 [connection signal="timeout" from="ability_laser/fire_length" to="ability_laser" method="_on_fire_length_timeout"]
+[connection signal="timeout" from="ability_laser/damage_tick" to="ability_laser" method="_on_damage_tick_timeout"]
 [connection signal="timeout" from="ability_heal/ability_heal_timer" to="ability_heal" method="_on_ability_heal_timer_timeout"]

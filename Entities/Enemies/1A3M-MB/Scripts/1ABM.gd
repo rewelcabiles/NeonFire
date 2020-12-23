@@ -9,6 +9,7 @@ func take_damage(damage, from = null):
 	last_damage_taken = damage
 	$Tween.interpolate_property($Aim, "modulate", old_modulate, new_modulate, 0.5)
 	$Tween.start()
+	print("ENEMY OFF 1")
 	.take_damage(damage, from)
 
 func _on_ability_shield_shield_died():
