@@ -24,8 +24,17 @@ func replace_room_with_prefab(old_room_index, new_room):
 	old_room.queue_free()
 
 
+func check_for_duplicates(old_list):
+	var new_list = []
+	for room in old_list:
+		if not room in new_list:
+			new_list.append(room)
+		else:
+			print("Huh. A duplicate in Populator")
+
 
 func populate_level(rl):
+	check_for_duplicates(rl)
 	rooms_list = rl
 	
 	# Start Room

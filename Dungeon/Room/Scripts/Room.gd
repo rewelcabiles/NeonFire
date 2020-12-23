@@ -10,7 +10,7 @@ var rng = RandomNumberGenerator.new()
 
 export var is_prefab = false
 export var cur_size = Vector2(0, 0)
-export var min_size = Vector2(20, 14)
+export var min_size = Vector2(20, 15)
 export var max_size = Vector2(25, 20)
 var flags = []
 var room_set;
@@ -48,7 +48,7 @@ func randomize_room():
 			
 	$floor_tiles.update_bitmask_region()
 	$wall_tiles.update_bitmask_region()
-	#$grid_tiles.update_bitmask_region()
+	$grid_tiles.update_bitmask_region()
 	
 	
 

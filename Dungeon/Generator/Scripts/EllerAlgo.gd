@@ -8,7 +8,7 @@ func de_duplicate(old_list):
 		if not room in new_list:
 			new_list.append(room)
 		else:
-			print("Huh. A duplicate")
+			print("Huh. A duplicate in Eller")
 	return new_list
 
 func generate_floor(size, _room_remove_amount):

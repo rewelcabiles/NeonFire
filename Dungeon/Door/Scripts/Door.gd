@@ -1,5 +1,6 @@
 extends Area2D
 
+export var cheat_mode = false
 var locked_texture = load("res://Dungeon/Door/Sprites/Door_Locked.png")
 var open_texture = load("res://Dungeon/Door/Sprites/Door_Open.png");
 var state = "unlocked"
@@ -7,6 +8,7 @@ var connects_to;
 var door_partner;
 var location;
 var is_partner = false
+
 
 var requires = [] 
 
@@ -42,7 +44,7 @@ func unlock_door(requirement):
 		"No requirement found in unlocking door"
 
 func interact(player):
-	if requires.size() == 0:
+	if requires.size() == 0 or cheat_mode:
 		emit_signal("door_entered", self)
 	else:
 		print("Door interacted yet is locked")

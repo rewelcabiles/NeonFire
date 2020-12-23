@@ -15,7 +15,7 @@ func _ready():
 	Game.new_game()
 	global_vars = Game.Generator.get_node("Global_Vars")
 	floor_1 = Game.Generator.get_node("Eller").generate_floor(5, 0)
-	var path = Game.Generator.get_node("DFS").dfs(floor_1)
+	var path = Game.Generator.get_node("DFS").do_dfs(floor_1)
 	
 	for room_index in range(path.size()):
 		var c = path[room_index]
