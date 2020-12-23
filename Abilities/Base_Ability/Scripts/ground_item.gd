@@ -5,7 +5,8 @@ func interact(player):
 	get_parent().get_parent().remove_child(get_parent())
 	player.add_child(get_parent())
 	toggle_ground_item(false)
-
+	Game.Generator.get_node("Player_Abilities").unlocked_ability(get_parent().ability_name_generator)
+	
 
 func toggle_ground_item(t):
 	if t == true:

@@ -1,19 +1,15 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Abilities/Shielded Dash/Scripts/Shielded Dash.gd" type="Script" id=1]
+[ext_resource path="res://Abilities/Base_Ability/Scripts/Base_Ability.gd" type="Script" id=1]
 [ext_resource path="res://Abilities/Shielded Dash/Sprites/Shielded_Dash.png" type="Texture" id=2]
-[ext_resource path="res://Abilities/Shielded Dash/Scripts/ground_item.gd" type="Script" id=3]
+[ext_resource path="res://Abilities/Base_Ability/Scripts/ground_item.gd" type="Script" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 29.6114
 height = 2.25928
 
-[node name="Shielded Dash" type="Node2D"]
+[node name="base_ability" type="Node2D"]
 script = ExtResource( 1 )
-ability_name = "Shielded Dash"
-description = "Invinsible while dashing, but
-cannot use weapons during
-the dash."
 
 [node name="ground_item" type="Area2D" parent="." groups=[
 "interactable",

@@ -1,9 +1,6 @@
-extends Node2D
+extends "res://Abilities/Base_Ability/Scripts/Base_Ability.gd"
 
-export (String) var ability_name
-export (String, MULTILINE) var description
-
-func _physics_process(delta):
+func _physics_process(_delta):
 	if get_parent().name != "Player":
 		return
 		

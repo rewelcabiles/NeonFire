@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Abilities/Base_Ability/Base_Ability.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Abilities/Shielded Dash/Scripts/shielded_dash.gd" type="Script" id=2]
+
+[node name="shielded_dash" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+ability_name = "Shielded Dash"
+description = "Invulnerable when dashing but cannot fire."
+ability_name_generator = "shielded_dash"
