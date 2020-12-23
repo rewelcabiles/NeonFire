@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Aerial.ogg-47e0c48797c5f71a082773b66dd94a54.oggstr" 
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

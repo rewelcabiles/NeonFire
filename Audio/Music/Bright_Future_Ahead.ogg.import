@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Bright_Future_Ahead.ogg-cb42028014e150a2a0c82223cfba
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

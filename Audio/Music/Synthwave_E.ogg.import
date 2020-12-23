@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Synthwave_E.ogg-cb8311799c2f5e6a5ffa3c6275758797.ogg
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

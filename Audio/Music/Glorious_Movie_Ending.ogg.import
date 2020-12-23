@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Glorious_Movie_Ending.ogg-539299c0093276b26bb4efff8d
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

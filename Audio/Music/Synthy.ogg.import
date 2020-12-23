@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Synthy.ogg-a12238cb7eceb838997d05c3dd2a34eb.oggstr" 
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0
