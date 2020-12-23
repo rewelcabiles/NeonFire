@@ -1,82 +1,57 @@
 extends Node2D
 
-var player_class = load("res://Entities/Player/player.tscn");
-var player;
-
-var current_room;
-var floor_1;
-var floor_2;
-var floor_3;
-var global_vars = Generator.get_node("Global_Vars")
-var door_mirror = {0:2, 1:3, 2:0, 3:1}
+var new_game_class = load("res://Dungeon/Game/playing.tscn")
 
 func _ready():
-	MusicManager.play_music("EndlessBlue")
-	floor_1 = Generator.get_node("Eller").generate_floor(4, 0)
-	var path = Generator.get_node("DFS").dfs(floor_1)
-	
-	for room_index in range(path.size()):
-		var c = path[room_index]
-		c.room_index = room_index
-		c.get_node("Label").text = "X: "+str(c.x) + " Y:" + str(c.y) + " RI:" + str(c.room_index)
-		
-	path = Generator.get_node("Populator").populate_level(path)
-	current_room = path[0]
-	# Set to true for debug
-	if false:
-		var current_x = 0
-		var current_y = 0
-		for rooms in path:
-			var room_x = rooms.cur_size.x * 80 * rooms.x
-			var room_y = rooms.cur_size.y * 80 * rooms.y
-			rooms.set_position(Vector2(room_x, room_y))
-			add_child(rooms)
-		$debug_camera.current = true
-		
-		
+	MusicManager.play_music("Bright_Future_Ahead")
 
-func _on_player_transition(door_obj):
-	print("Game Transition")
-	var next_room = door_obj.connects_to;
-	var amount = 80
-	if door_obj.location == 0:
-		player.set_position(door_obj.door_partner.position + Vector2(64, -amount));
-	if door_obj.location == 1:
-		player.set_position(door_obj.door_partner.position + Vector2(amount, 64));
-	if door_obj.location == 2:
-		player.set_position(door_obj.door_partner.position + Vector2(64, amount));
-	if door_obj.location == 3:
-		player.set_position(door_obj.door_partner.position + Vector2(-amount, 64));
-	remove_child(current_room)
-	current_room.remove_child(player)
-	# Set new room as current room, and connect signals
-	current_room = next_room
-	current_room.connect("door_entered", self, "_on_player_transition", [], 1)
-	# Move player to new room
-	current_room.add_child(player)
-	current_room.player_visited = true
-	global_vars.current_room = current_room
-	add_child(current_room)
 	
-	
-func connect_room_signal():
-	print("Connecting")
-	
-	
-func start_game():#544 320
+func start_game():
 	get_node("main_menu_ui").get_node("AnimationPlayer").play("Fade_Out");
-
-func spawn_player():
-	add_child(current_room)
-	current_room.player_visited = true
-	player = current_room.get_node("Space_Ship/Player")
-	current_room.connect("door_entered", self, "_on_player_transition", [], 1)
-	remove_child(get_node("main_menu_ui"))
-	global_vars.player = player
-	global_vars.current_room = current_room
+	var new_game = new_game_class.instance()
+	add_child(new_game)
 	
+func show_main_menu():
+	get_node("main_menu_ui").get_node("AnimationPlayer").play("Fade_In");
+	$Camera2D.current = true
 
-	
+func get_high_scores():
+	var high_score_class = load("res://Dungeon/Game/Assets/high_score.tscn")
+	var files = []
+	var dir = Directory.new()
+	dir.open("user://highscores")
+	dir.list_dir_begin()
+	while true:
+		var file = dir.get_next()
+		if file == "":
+			break
+		elif not file.begins_with(".") and file.ends_with("highscore"):
+			files.append(file)
+	dir.list_dir_end()
+
+	for file in files:
+		print(file)
+		var high_score = File.new()
+		high_score.open("user://highscores/"+ file, File.READ)
+		var elapsed = high_score.get_line()
+		var date = high_score.get_line()
+		high_score.close()
+		print(elapsed)
+		print(date)
+		var new_score = high_score_class.instance()
+		new_score.get_node("Elapsed Time").text = elapsed
+		new_score.get_node("Date").text = date
+		$high_scores/VBoxContainer.add_child(new_score)
+		
 
 func exit_game():
 	get_tree().quit()
+
+func _on_button_option_pressed():
+	get_high_scores()
+	$main_menu_ui.get_node("AnimationPlayer").play("Fade_Out");
+	$high_scores.get_node("AnimationPlayer").play("fade_in")
+
+func _on_button_menu_pressed():
+	$main_menu_ui.get_node("AnimationPlayer").play("Fade_In");
+	$high_scores.get_node("AnimationPlayer").play("fade_out")
