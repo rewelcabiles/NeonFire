@@ -9,7 +9,7 @@ var projectile_owner = null
 func _physics_process(delta):
 	position += transform.x * (speed*10) * delta
 
-func _on_Base_Projectile_body_shape_entered(body_id, body, body_shape, area_shape):
+func _on_Base_Projectile_body_shape_entered(_body_id, body, _body_shape, _area_shape):
 	if !watching:
 		return null
 	if body.name != "wall_tiles":

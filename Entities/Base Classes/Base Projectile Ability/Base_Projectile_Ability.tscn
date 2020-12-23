@@ -1,16 +1,22 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Entities/Base Classes/Base Projectile Ability/Scripts/Base_Projectile_Ability.gd" type="Script" id=1]
-[ext_resource path="res://Entities/Base Classes/Base Projectile Ability/Base_Projectile.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Entities/Weapons/Energy Rifle/audio/er_fire.wav" type="AudioStream" id=2]
+[ext_resource path="res://Entities/Base Classes/Base Projectile Ability/Scripts/sfx.gd" type="Script" id=3]
 
 [node name="Base_Projectile_Ability" type="Node2D"]
 script = ExtResource( 1 )
-projectile_class = ExtResource( 2 )
+sfx_file = ExtResource( 2 )
 
 [node name="fire_timer" type="Timer" parent="."]
 one_shot = true
 
 [node name="reload_timer" type="Timer" parent="."]
 one_shot = true
+
+[node name="sfx" type="AudioStreamPlayer2D" parent="."]
+position = Vector2( 1, 0 )
+volume_db = -36.438
+script = ExtResource( 3 )
 [connection signal="timeout" from="fire_timer" to="." method="_on_fire_timer_timeout"]
 [connection signal="timeout" from="reload_timer" to="." method="_on_reload_timer_timeout"]

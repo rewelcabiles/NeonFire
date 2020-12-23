@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name Room
+
 var door_class = load("res://Dungeon/Door/Door.tscn");
 
 signal door_entered(door_obj)
@@ -35,18 +37,18 @@ func randomize_room():
 		cur_size.y = rng.randi_range(min_size.y, max_size.y)
 		cur_size.x = rng.randi_range(min_size.x, max_size.x)
 
-	for x in range(cur_size.x):
-		for y in range(cur_size.y):
-			if x == 0 or x == cur_size.x - 1 or y == 0 or y == cur_size.y - 1:
-				$wall_tiles.set_cellv(Vector2(x, y), 1)
+	for rx in range(cur_size.x):
+		for ry in range(cur_size.y):
+			if rx == 0 or rx == cur_size.x - 1 or ry == 0 or ry == cur_size.y - 1:
+				$wall_tiles.set_cellv(Vector2(rx, ry), 1)
 			else:
-				$grid_tiles.set_cellv(Vector2(x, y), 5)
-				$spawnable_tiles.set_cellv(Vector2(x, y), 5)
-			$floor_tiles.set_cellv(Vector2(x, y), 3)
+				$grid_tiles.set_cellv(Vector2(rx, ry), 5)
+				$spawnable_tiles.set_cellv(Vector2(rx, ry), 5)
+			$floor_tiles.set_cellv(Vector2(rx, ry), 3)
 			
 	$floor_tiles.update_bitmask_region()
 	$wall_tiles.update_bitmask_region()
-	$grid_tiles.update_bitmask_region()
+	#$grid_tiles.update_bitmask_region()
 	
 	
 
@@ -96,10 +98,17 @@ func connect_doors():
 		else:
 			self_door.position += Vector2(0, -64)
 			
-		partner[0].add_child(partner_door)
-		add_child(self_door)
+		partner[0].call_deferred("add_child", partner_door)
+		call_deferred("add_child", self_door)
 
-
+func get_random_spawn_point(as_world = true):
+	rng.randomize()
+	var spawnable_tiles = $spawnable_tiles.get_used_cells_by_id(5)
+	var spawn_point = spawnable_tiles[randi() % spawnable_tiles.size()]
+	if as_world:
+		return $spawnable_tiles.map_to_world(spawn_point)
+	else:
+		return spawn_point
 
 func _on_Room_tree_entered():
 	for flag in flags:

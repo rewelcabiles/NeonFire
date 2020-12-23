@@ -18,7 +18,7 @@ var ready = false
 func _ready():
 	ready = true
 
-func _process(delta):
+func _process(_delta):
 	if ready:
 		$AI.AI()
 		
@@ -26,9 +26,14 @@ func _physics_process(delta):
 	if !ready:
 		return
 	if get_parent().has_node("Player"):
-		target = get_parent().get_node("Player")
-		if looks_at_enemy:
-			$Aim.look_at(target.position)
+		if !get_parent().get_node("Player").dead:
+			target = get_parent().get_node("Player")
+			if looks_at_enemy:
+				$Aim.look_at(target.position)
+		else:
+			target = null
+		
+		
 	else:
 		target = null
 	
@@ -41,15 +46,19 @@ func heal(amount, bypass_max = false):
 		if health + amount > max_health:
 			health = max_health
 
+func die():
+	ready = false
+	emit_signal("died", self)
+	$death_particles.emitting = true
+	$AnimationPlayer.play("die")
+
 func take_damage(damage, from = null):
 	health -= damage
 	$damage_particles.emitting = true
 	if health <= 0 and ready == true:
-		ready = false
-		emit_signal("died", self)
-		$death_particles.emitting = true
-		$AnimationPlayer.play("die")
-	emit_signal("took_damage", self)
+		die()
+	else:
+		emit_signal("took_damage", self)
 	
 func get_health_as_percentage():
 	return (health / max_health) * 100.0

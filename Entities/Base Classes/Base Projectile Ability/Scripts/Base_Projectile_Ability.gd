@@ -1,10 +1,10 @@
 extends Node2D
 
-export (PackedScene) var projectile_class;
-
 var can_fire = true
 var reloading = false
 
+export (PackedScene) var projectile_class;
+export (Resource) var sfx_file = null
 export var weapon_name = "Default Name"
 export var max_total_ammo = 100
 export var total_ammo = 100 setget update_total
@@ -38,10 +38,26 @@ func reload():
 func fire():
 	if can_fire and cur_clip != 0 and !reloading:
 		spawn_projectiles()
+		play_sample()
 		can_fire = false
 		self.cur_clip -= 1
 		$fire_timer.set_wait_time(fire_rate)
 		$fire_timer.start();
+	
+func play_sample():
+	var sfx := $sfx.duplicate(DUPLICATE_USE_INSTANCING)
+	sfx.stream = sfx_file
+	get_parent().add_child(sfx)
+	sfx.global_position = get_parent().position
+	sfx.play()
+	yield(sfx, "finished")
+	sfx.queue_free()
+	
+func play_sfx():
+	if sfx_file == null:
+		return
+	$sfx.stream = sfx_file
+	$sfx.play()
 
 func spawn_projectiles():
 	var projectile = projectile_class.instance();

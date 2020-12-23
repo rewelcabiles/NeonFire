@@ -8,27 +8,40 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "Room",
+"language": "GDScript",
+"path": "res://Dungeon/Room/Scripts/Room.gd"
+}, {
+"base": "Node",
+"class": "Spawner",
+"language": "GDScript",
+"path": "res://Dungeon/Encounter/Spawner/Scripts/Spawner.gd"
+} ]
 _global_script_class_icons={
-
+"Room": "",
+"Spawner": ""
 }
 
 [application]
 
-config/name="Scifi"
-run/main_scene="res://Dungeon/Game/Game.tscn"
+config/name="Neon Fire"
+run/main_scene="res://Dungeon/Game/main_menu.tscn"
+config/icon="res://icon.png"
+config/windows_native_icon="res://icon.ico"
 
 [autoload]
 
 MusicManager="*res://Dungeon/Game/Music_Manager.tscn"
-Generator="*res://Dungeon/Generator/Generator.tscn"
+Game="*res://Dungeon/Game/Game.tscn"
 
 [display]
 
 window/size/width=1920
 window/size/height=1080
-window/size/test_width=1920
-window/size/test_height=1080
+window/size/test_width=1280
+window/size/test_height=720
 window/stretch/mode="2d"
 window/stretch/aspect="expand"
 
@@ -102,4 +115,5 @@ dash={
 [rendering]
 
 quality/2d/use_pixel_snap=true
+quality/filters/msaa=2
 environment/default_environment="res://default_env.tres"
