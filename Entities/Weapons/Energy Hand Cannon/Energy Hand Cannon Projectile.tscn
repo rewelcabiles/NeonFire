@@ -5,7 +5,7 @@
 
 [node name="Base_Projectile" instance=ExtResource( 1 )]
 speed = 440
-damage = 4
+damage = 6
 
 [node name="CollisionShape2D" parent="." index="0"]
 position = Vector2( 0, -1 )

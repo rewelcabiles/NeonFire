@@ -11,7 +11,8 @@ func _on_run_over(player):
 
 
 func _on_Base_Runover_body_entered(body):
-	_on_run_over(body)
+	if body.name == "Player":
+		_on_run_over(body)
 	
 func _process(delta):
 	position += transform.x * speed * delta

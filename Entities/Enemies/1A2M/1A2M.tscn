@@ -5,6 +5,8 @@
 [ext_resource path="res://Entities/Enemies/1A2M/360_Ability.tscn" type="PackedScene" id=3]
 
 [node name="1A2M" instance=ExtResource( 1 )]
+health = 24.0
+max_health = 24.0
 difficulty = 3
 
 [node name="AI" parent="." index="0"]

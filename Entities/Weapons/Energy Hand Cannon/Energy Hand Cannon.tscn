@@ -1,13 +1,21 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Entities/Weapons/Player Weapon Base/Base_Player_Projectile_weapon.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Entities/Weapons/Energy Hand Cannon/Energy Hand Cannon Projectile.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Entities/Weapons/Energy Hand Cannon/audio/ehc_fire.wav" type="AudioStream" id=3]
 
 [node name="Energy Hand Cannon" instance=ExtResource( 1 )]
 projectile_class = ExtResource( 2 )
+sfx_file = ExtResource( 3 )
 weapon_name = "Hand Cannon"
-max_total_ammo = 48
-total_ammo = 48
+max_total_ammo = 72
+total_ammo = 72
 max_clip = 12
 cur_clip = 12
-ammo_pickup_multiplier = 2.0
+reload_time = 1.5
+ammo_pickup_multiplier = 1.5
+
+[node name="sfx" parent="." index="4"]
+position = Vector2( 0, 0 )
+pitch_scale = 0.74
+script = null

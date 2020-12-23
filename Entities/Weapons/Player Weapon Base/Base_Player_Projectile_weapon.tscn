@@ -49,6 +49,9 @@ custom_fonts/font = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="sfx" parent="." index="4"]
+volume_db = -25.051
 [connection signal="tree_entered" from="." to="." method="_on_Base_Player_Projectile_weapon_tree_entered"]
 [connection signal="body_entered" from="floor_item" to="floor_item" method="_on_floor_item_body_entered"]
 [connection signal="body_exited" from="floor_item" to="floor_item" method="_on_floor_item_body_exited"]

@@ -4,6 +4,8 @@
 [ext_resource path="res://Entities/Enemies/1A1M/1A1M_Ability.tscn" type="PackedScene" id=2]
 
 [node name="1A1M" instance=ExtResource( 1 )]
+health = 14.0
+max_health = 14.0
 
 [node name="Abilities" parent="." index="1"]
 ability_1_class = ExtResource( 2 )
