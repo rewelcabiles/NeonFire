@@ -2,13 +2,21 @@ extends Node
 
 var room_class = load("res://Dungeon/Room/room.tscn");
 
+func de_duplicate(old_list):
+	var new_list = []
+	for room in old_list:
+		if not room in new_list:
+			new_list.append(room)
+		else:
+			print("Huh. A duplicate")
+	return new_list
 
-func generate_floor(size, room_remove_amount):
+func generate_floor(size, _room_remove_amount):
 	randomize()
 	var rooms_matrix = [];
 	var rooms_list = [];
 	var room_xy = size;
-	var room_x = room_xy
+	var room_x = room_xy - 1
 	var room_y = room_xy - 1
 	get_parent().get_node("Global_Vars").floor_x = room_x
 	get_parent().get_node("Global_Vars").floor_y = room_y
@@ -77,8 +85,8 @@ func generate_floor(size, room_remove_amount):
 				adj_cell.links_door(cell, 2)
 				adj_cell.room_set = cell.room_set
 
-
-	return rooms_list
+	print("Ellers Algo Complete")
+	return de_duplicate(rooms_list)
 
 
 func remove_link(room):

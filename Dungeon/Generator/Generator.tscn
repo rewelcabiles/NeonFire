@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Dungeon/Generator/Scripts/Ability.gd" type="Script" id=1]
 [ext_resource path="res://Dungeon/Generator/Scripts/DFS.gd" type="Script" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://Dungeon/Generator/Scripts/Populator.gd" type="Script" id=4]
 [ext_resource path="res://Dungeon/Generator/Scripts/Enemies.gd" type="Script" id=5]
 [ext_resource path="res://Dungeon/Generator/Scripts/Drop Table.gd" type="Script" id=6]
+[ext_resource path="res://Dungeon/Generator/Scripts/Player_Abilities.gd" type="Script" id=7]
+[ext_resource path="res://Dungeon/Generator/Scripts/Weapons.gd" type="Script" id=8]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node
@@ -57,3 +59,9 @@ script = ExtResource( 6 )
 
 [node name="Global_Vars" type="Node" parent="."]
 script = SubResource( 1 )
+
+[node name="Player_Abilities" type="Node" parent="."]
+script = ExtResource( 7 )
+
+[node name="Weapons" type="Node" parent="."]
+script = ExtResource( 8 )

@@ -1,5 +1,7 @@
 extends Node
 
+signal restart_required
+
 var debug_door
 var random = RandomNumberGenerator.new()
 var key_location;
@@ -22,11 +24,14 @@ func replace_room_with_prefab(old_room_index, new_room):
 	old_room.queue_free()
 
 
+
 func populate_level(rl):
 	rooms_list = rl
+	
 	# Start Room
 	replace_room_with_prefab(0, load("res://Dungeon/Prefab Rooms/Area 1/Start Room.tscn").instance())
 	replace_room_with_prefab(-1, load("res://Dungeon/Prefab Rooms/Area 1 Boss/A1Boss.tscn").instance())
+	rooms_list[0].flags.append("start_room")
 	# Initialize Random Room Size if Not Prefab
 	for room in rooms_list:
 		if !room.is_prefab:
@@ -44,13 +49,16 @@ func populate_level(rl):
 	apply_room_flags()
 	populate_rooms()
 	
-	
+	print("Populator Complete")
 	
 	return rooms_list
 	
 func apply_room_flags():
 	for room in rooms_list:
-		if room.flags.has("key_location"):
+		# Allows treasure drops to spawn in key rooms
+		#if room.flags.has("key_location"):
+		#	continue
+		if room.flags.has("start_room"):
 			continue
 			
 		if room.door_children.size() == 1:
@@ -84,10 +92,16 @@ func create_locks():
 		lowest_door.lock_door(new_key.item_name)
 		
 		# Place key in any unblocked room with an index lower than the goal room
+		var tries = 0
 		while true:
-			var key_loc_index = current_goal.room_index - random.randi_range(2, 3)
+			var key_loc_index = current_goal.room_index - random.randi_range(2, 4)
 			if key_loc_index < 2:
-				continue
+				if tries == 20:
+					print("Possible infinite loop")
+					key_loc_index = 1
+				else:
+					tries += 1
+					continue
 			var key_room_location = rooms_list[key_loc_index]
 			var new_key_x = random.randi_range(2, key_room_location.cur_size.x - 2)
 			var new_key_y = random.randi_range(2, key_room_location.cur_size.y - 2)
@@ -96,23 +110,47 @@ func create_locks():
 			key_room_location.flags.append("key_location")
 			current_goal = key_room_location
 			break
+		if tries >= 20:
+			break
 		cur_locks += 1
+
+func check_if_has_spawner(room: Room):
+	for node in room.get_children():
+		if node is Spawner:
+			return true
+	return false
 
 func populate_rooms():
 	for room in rooms_list:
 		# Key Rooms
 		if room.flags.has("key_location"):
+			if check_if_has_spawner(room):
+				continue
 			var spawner = spawner_class.instance()
 			spawner.wave_spawning = true
-			spawner.wave_amount = random.randi_range(2, 5)
-			spawner.difficulty = 4
+			spawner.wave_amount = 3
+			spawner.difficulty = 6
 			room.add_child(spawner)
 		
 		if room.flags.has("normal_room"):
+			if check_if_has_spawner(room):
+				continue
 			var spawner = spawner_class.instance()
 			spawner.wave_spawning = false
 			spawner.difficulty = 4
 			room.add_child(spawner)
 		
-
+		if room.flags.has("end_room"):
+			var drop_type = ["weapon", "ability", "ability"]
+			var drop = drop_type[randi() % drop_type.size()]
+			var drop_items
+			if drop == "weapon":
+				drop_items = get_parent().get_node("Weapons").types
+			elif drop == "ability":
+				drop_items = get_parent().get_node("Ability").types
+			
+			var new_item_info = drop_items[randi() % drop_items.size()]	
+			var new_item = new_item_info["class"].instance()
+			new_item.position = room.get_random_spawn_point()
+			room.add_child(new_item)
 			

@@ -2,16 +2,16 @@ extends Node
 
 var types = [
 	{
-		"name" : "Shielded Dash",
-		"class" : load("res://Abilities/Shielded Dash/shielded_dash.tscn"),
+		"name" : "Energy Rifle",
+		"class" : load("res://Entities/Weapons/Energy Rifle/Energy_Rifle.tscn"),
 		"rarity" : "common",
-		"floor_blacklist" : 3
+		"floor_blacklist" : 0
 	},
 	{
-		"name" : "Resource UP",
-		"class" : load("res://Abilities/Resource UP!/resource_up.tscn"),
+		"name" : "Energy Hand Cannon",
+		"class" : load("res://Entities/Weapons/Energy Hand Cannon/Energy Hand Cannon.tscn"),
 		"rarity" : "common",
-		"floor_blacklist" : 3
+		"floor_blacklist" : 0
 	}
 ]
 

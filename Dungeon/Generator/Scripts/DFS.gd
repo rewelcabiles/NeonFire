@@ -1,8 +1,5 @@
 extends Node
 
-func _ready():
-	pass
-
 func dfs(room_list):
 	var visited = []
 	var stack = []
@@ -16,7 +13,10 @@ func dfs(room_list):
 			if !visited.has(n):
 				stack.append(n)
 	get_parent().get_node("Global_Vars").room_list = visited
+	print("DFS Complete")
 	return visited
+
+
 
 func get_neighbors(cell):
 	var n_list = []
