@@ -42,15 +42,14 @@ func _on_AnimationPlayer_animation_finished(_anim_name):
 
 
 func _on_Music_finished():
-	if loop_mode == true:
-		$Music.play()
-		
-	elif playlist_mode == true:
-		var random_song
-		while true:
-			random_song = tracks[randi() % tracks.size()]
-			if random_song == last_played_song:
-				continue
-			else:
-				break
-		play_music(random_song)
+	print("Music Done")
+	var random_song
+	while true:
+		random_song = tracks[randi() % tracks.size()]
+		print(random_song)
+		print(last_played_song)
+		if random_song == last_played_song:
+			continue
+		else:
+			break
+	play_music(random_song)

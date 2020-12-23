@@ -32,6 +32,7 @@ var locked = load(\"res://Dungeon/Door/Sounds/locked.wav\")
 func play_locked():
 	stream = locked
 	play()
+	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -26,7 +26,7 @@ func _ready():
 	current_room = path[0]
 	MusicManager.loop_mode = false
 	MusicManager.playlist_mode = true
-	MusicManager.play_music("random")
+	MusicManager.play_music("Synthy")
 	spawn_player()
 
 func transition(door):

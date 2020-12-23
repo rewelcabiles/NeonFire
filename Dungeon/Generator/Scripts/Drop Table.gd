@@ -17,7 +17,7 @@ var resources = [
 	{
 		"name":"energy_warp_charges",
 		"class" : load("res://Items/Runover Pickups/Energy_Warp/energy_warp.tscn"),
-		"chance" : 0.3,
+		"chance" : 0.1,
 		"guaranteed" : true
 	}
 	

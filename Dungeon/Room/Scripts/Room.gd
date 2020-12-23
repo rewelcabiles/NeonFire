@@ -10,8 +10,8 @@ var rng = RandomNumberGenerator.new()
 
 export var is_prefab = false
 export var cur_size = Vector2(0, 0)
-export var min_size = Vector2(20, 20)
-export var max_size = Vector2(20, 20)
+export var min_size = Vector2(20, 14)
+export var max_size = Vector2(25, 20)
 var flags = []
 var room_set;
 var room_index
